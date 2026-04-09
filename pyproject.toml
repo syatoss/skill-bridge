@@ -1,0 +1,19 @@
+[project]
+name = "anthropic-skills-mcp"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "syatoss", email = "syatoss@gmail.com" }
+]
+requires-python = ">=3.11"
+dependencies = [
+    "mcp>=1.27.0",
+    "pyyaml>=6.0.3",
+    "starlette>=1.0.0",
+    "uvicorn>=0.44.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
