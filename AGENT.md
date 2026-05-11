@@ -74,3 +74,14 @@ The `"anthropic-skills-bridge"` server block should be merged into the existing 
 - The `ANTHROPIC_SKILLS_DIR` env var MUST be an absolute path to the user's skills directory.
 - Never use relative paths in the generated configuration.
 - The server is invoked via `python -m anthropic_skills_mcp` — the package must be installed in the venv first (`uv sync`).
+
+## Available MCP Tools
+
+Once configured, the server exposes the following tools to MCP clients:
+
+| Tool | Description |
+|------|-------------|
+| `list_skills` | Lists all available skills with `name`, `description`, and `triggers`. Primary discovery mechanism. |
+| `get_skill` | Returns a skill's full YAML frontmatter (as JSON) and markdown body by name. |
+| `get_skill_reference` | Fetches auxiliary files from a skill's directory (e.g., `references/patterns.md`). Path-traversal protected. |
+| `reload_skills` | Re-scans the skills directory and refreshes the cache without restarting the server. |

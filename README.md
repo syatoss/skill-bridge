@@ -7,7 +7,10 @@ An MCP (Model Context Protocol) server that allows models that do not natively s
 - **Bridging Skills**: Exposes Anthropic Agent Skills (`SKILL.md` files) as standard MCP Resources and Tools.
 - **Auto-Discovery**: Recursively scans a directory for skills on startup.
 - **Resource discovery**: Provides a list of all available skill frontmatters (names, descriptions, triggers) via the `skills://frontmatter` resource.
-- **Tool discovery**: Provides a `get_skill` tool to fetch the full markdown content of any skill.
+- **Tool: list_skills**: Lists all available skills with names, descriptions, and triggers — the primary discovery mechanism for VS Code Copilot.
+- **Tool: get_skill**: Fetches the full content and frontmatter of a specific skill.
+- **Tool: get_skill_reference**: Retrieves reference files from a skill's subdirectory (e.g., `references/advanced-types.md`).
+- **Tool: reload_skills**: Hot-reloads skills from disk without restarting the server.
 - **Dual Transport**: Supports both `STDIO` (for local use) and `SSE` (HTTP-based) transports.
 
 ## Installation
@@ -50,7 +53,11 @@ uv run python -m anthropic_skills_mcp --transport sse --port 8000
 1. **Initialization**: On startup, the server scans the `ANTHROPIC_SKILLS_DIR` recursively.
 2. **Parsing**: It identifies every `SKILL.md` file and parses its YAML frontmatter.
 3. **Resource**: It exposes `skills://frontmatter`. When an LLM reads this resource, it receives a JSON list of all skill metadata, helping it decide which skill is relevant to the current task.
-4. **Tool**: It exposes the `get_skill` tool. When an LLM decides it needs a specific skill, it calls this tool with the skill's name to get the full instructions and guidelines from the `SKILL.md` file.
+4. **Tools**:
+   - `list_skills` — Returns a JSON array of all skills with `name`, `description`, and `triggers`. This is the primary discovery mechanism for MCP clients like VS Code Copilot.
+   - `get_skill` — Returns both the YAML frontmatter (as JSON) and the full markdown body of a skill.
+   - `get_skill_reference` — Fetches auxiliary files (e.g., `references/patterns.md`) from within a skill's directory. Includes path traversal protection.
+   - `reload_skills` — Re-scans the skills directory and refreshes the internal cache without restarting the server.
 
 ## Skill Format
 
