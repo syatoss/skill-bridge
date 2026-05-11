@@ -1,0 +1,17 @@
+{
+  "servers": {
+    "anthropic-skills-bridge": {
+      "type": "stdio",
+      "command": "c:\\skill-bridge\\.venv\\Scripts\\python.exe",
+      "args": [
+        "-m",
+        "anthropic_skills_mcp",
+        "--transport",
+        "stdio"
+      ],
+      "env": {
+        "ANTHROPIC_SKILLS_DIR": "C:\\skills"
+      }
+    }
+  }
+}
